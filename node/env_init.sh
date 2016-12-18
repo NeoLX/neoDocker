@@ -1,0 +1,1 @@
+echo ${MYSQL_PORT}
