@@ -9,6 +9,6 @@ COPY ./env_init.sh /
 
 ENTRYPOINT ["/env_init.sh"]
 
-EXPOSE $MYSQL_PORT
+EXPOSE 8088
 
 CMD ["node","test.js"]
