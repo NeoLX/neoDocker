@@ -5,7 +5,7 @@ var http = require("http");
 
 console.log(process.env);
 
-http.createServer(function (request, response) {
+var server = http.createServer(function (request, response) {
 
 	// 发送 HTTP 头部
 	// HTTP 状态值: 200 : OK
@@ -17,4 +17,4 @@ http.createServer(function (request, response) {
 }).listen(8088);
 
 // 终端打印如下信息
-console.log(`Server running at ${http.address}:${configs.port}`);
+console.log(`Server running at ${server.address}:8088`);

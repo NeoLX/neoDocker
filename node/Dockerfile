@@ -7,7 +7,7 @@ WORKDIR /myproject
 COPY ./project /myproject
 COPY ./env_init.sh /
 
-ENTRYPOINT ["/env_init.sh"]
+# ENTRYPOINT ["/env_init.sh"]
 
 EXPOSE 8088
 
