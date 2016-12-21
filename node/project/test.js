@@ -1,7 +1,9 @@
 // console.log("hello world!");
 
 var http = require("http");
-var configs = require("./configs/server.json");
+// var configs = require("./configs/server.json");
+
+console.log(process.env);
 
 http.createServer(function (request, response) {
 
@@ -12,7 +14,7 @@ http.createServer(function (request, response) {
 
 	// 发送响应数据 "Hello World"
 	response.end('Hello World\n');
-}).listen(configs.port);
+}).listen(8088);
 
 // 终端打印如下信息
 console.log(`Server running at ${http.address}:${configs.port}`);
