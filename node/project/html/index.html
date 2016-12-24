@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://webapi.amap.com/maps?v=1.3&key=1ed0fe4f6c7cc2c5c3642838cebd78f1"></script>
+    <style type="text/css">
+      body,html,#container{
+        width: 100%;
+        height: 100%;
+        margin: 0px
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container" >
+    </div>
+
+    <script type="text/javascript">
+
+      var map = new AMap.Map('container', {
+         center:[117.000923,36.675807],
+         zoom:11
+      });
+
+      AMap.plugin('AMap.ToolBar',function(){
+         var toolbar = new AMap.ToolBar();
+         map.addControl(toolbar)
+      })
+
+    </script>
+  </body>
+</html>
