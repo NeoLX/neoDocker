@@ -1,0 +1,16 @@
+{
+  "LNG_LAT_DISTRICT_UNIT":85275.2301238056,
+  "area":{
+    "radius":1000,
+    "mark":{
+      "count":5
+    }
+  },
+  "districts":[
+    {
+      "name":"水电厂",
+      "lng":"113.372786",
+      "lat":"23.125490"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 // console.log("hello world!");
 
 var express = require("express");
+var mapHandlers = require("./lib/mapHandler.js");
 // var configs = require("./configs/server.json");
 
 // console.log(process.env);
@@ -8,6 +9,8 @@ var express = require("express");
 var app = express();
 
 app.use(express.static("html"));
+
+app.get("/getmarks", mapHandlers.getAreaMarks);
 
 var server = app.listen(8088, function(){
 	console.log(`Server running at ${server.address().address}:${server.address().address}`);
