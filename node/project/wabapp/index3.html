@@ -52,7 +52,7 @@
 				navigator.mediaDevices.getUserMedia = function(constraints) {
 					if(navigator.webkitGetUserMedia) {
 						$("#testfield").append('webkitGetUserMedia mode <br/>');
-					} else(navigator.mozGetUserMedia) {
+					} else if(navigator.mozGetUserMedia) {
 						$("#testfield").append('mozGetUserMedia mode <br/>');
 					}
 
