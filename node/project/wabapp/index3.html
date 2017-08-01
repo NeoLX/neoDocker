@@ -34,13 +34,13 @@
 			var canvas = document.getElementById("canvas");
 			var context = canvas.getContext("2d");
 
-			$(document).ready(function() {
-				$("#testfield").append('navigator.appCodeName:' + navigator.appCodeName + "<br/>");
-				$("#testfield").append('navigator.appName:' + navigator.appName + "<br/>");
-				$("#testfield").append('navigator.appVersion:' + navigator.appVersion + "<br/>");
-				$("#testfield").append('navigator.platform:' + navigator.platform + "<br/>");
-				$("#testfield").append('navigator.userAgent:' + navigator.userAgent + "<br/>");
+			$("#testfield").append('navigator.appCodeName:' + navigator.appCodeName + "<br/>");
+			$("#testfield").append('navigator.appName:' + navigator.appName + "<br/>");
+			$("#testfield").append('navigator.appVersion:' + navigator.appVersion + "<br/>");
+			$("#testfield").append('navigator.platform:' + navigator.platform + "<br/>");
+			$("#testfield").append('navigator.userAgent:' + navigator.userAgent + "<br/>");
 
+			$(document).ready(function() {
 				var errocb = function(err) {
 					$("#testfield").append('error:' + JSON.stringify(err));
 						};
@@ -67,8 +67,6 @@
 						video.src = window.webkitURL.createObjectURL(stream);
 						video.play();
 					}, errocb);
-				}else{
-					$("#testfield").append('do not support cam');
 				}
 				document.getElementById("paizhao").addEventListener("click", function() {
 					context.drawImage(video, 0, 0, 640, 480);
