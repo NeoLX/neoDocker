@@ -81,16 +81,16 @@
 			}
 
 			$(document).ready(function() {
-				var errocb = function(err) {
-					$("#testfield").append('error:' + JSON.stringify(err));
-				};
-				var successcb = function(stream) {
-					$("#testfield").append('stream:' + stream + "<br/>");
-					$("#testfield").append('video:' + video + "<br/>");
-
-					video.srcObject = stream;
-					video.play();
-				};
+//				var errocb = function(err) {
+//					$("#testfield").append('error:' + JSON.stringify(err));
+//				};
+//				var successcb = function(stream) {
+//					$("#testfield").append('stream:' + stream + "<br/>");
+//					$("#testfield").append('video:' + video + "<br/>");
+//
+//					video.srcObject = stream;
+//					video.play();
+//				};
 				//				if(navigator.getUserMedia) {
 				//					$("#testfield").append('getUserMedia is enable<br/>');
 
@@ -98,11 +98,14 @@
 						video: true
 					})
 					.then(function(stream) {
-//						var video = document.querySelector('video');
+						//						var video = document.querySelector('video');
 						// Older browsers may not have srcObject
-						
+
 						$("#testfield").append('start video <br/>');
-						
+
+						$("#testfield").append('stream:' + stream + "<br/>");
+						$("#testfield").append('video:' + video + "<br/>");
+
 						if("srcObject" in video) {
 
 							$("#testfield").append('srcObject setting');
@@ -125,7 +128,9 @@
 						};
 					})
 					.catch(function(err) {
-						console.log(err.name + ": " + err.message);
+						$("#testfield").append('error:' + JSON.stringify(err));
+						$("#testfield").append('error.name:' + err.name);
+						$("#testfield").append('error.message:' + err.message);
 					});
 				//					navigator.getUserMedia({
 				//						"video": true
