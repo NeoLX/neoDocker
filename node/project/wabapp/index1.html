@@ -24,6 +24,7 @@
     </div>
     <script type="text/javascript">
         var video = document.getElementById("video");
+        var canvas = document.getElementById("canvas");
         var context = canvas.getContext("2d");
         var errocb = function () {
             console.log("sth srong");
@@ -44,7 +45,7 @@
             $("#testfield").append('拍照成功<br/>');
         });
         document.getElementById("getfile").addEventListener("click", function () {
-            var data = context.toDataURL("image/png");
+            var data = canvas.toDataURL("image/png");
             $("#testfield").append('获取文件成功：[' + data + ']<br/>');
         });
     </script>
