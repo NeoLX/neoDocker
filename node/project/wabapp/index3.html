@@ -50,6 +50,11 @@
 			// Here, we will just add the getUserMedia property if it's missing.
 			if(navigator.mediaDevices.getUserMedia === undefined) {
 				navigator.mediaDevices.getUserMedia = function(constraints) {
+					if(navigator.webkitGetUserMedia) {
+						$("#testfield").append('webkitGetUserMedia mode <br/>');
+					} else(navigator.mozGetUserMedia) {
+						$("#testfield").append('mozGetUserMedia mode <br/>');
+					}
 
 					// First get ahold of the legacy getUserMedia, if present
 					var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -57,6 +62,8 @@
 					// Some browsers just don't implement it - return a rejected promise with an error
 					// to keep a consistent interface
 					if(!getUserMedia) {
+
+						$("#testfield").append('getUserMedia is not implemented in this browser' + "<br/>");
 						return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
 					}
 
@@ -72,48 +79,59 @@
 					$("#testfield").append('error:' + JSON.stringify(err));
 				};
 				var successcb = function(stream) {
-					$("#testfield").append('stream:' + stream);
-					$("#testfield").append('video:' + video);
+					$("#testfield").append('stream:' + stream + "<br/>");
+					$("#testfield").append('video:' + video + "<br/>");
 
 					video.srcObject = stream;
 					video.play();
 				};
-				if(navigator.getUserMedia) {
-					$("#testfield").append('getUserMedia is enable<br/>');
+				//				if(navigator.getUserMedia) {
+				//					$("#testfield").append('getUserMedia is enable<br/>');
 
-					navigator.mediaDevices.getUserMedia({
-							video: true
-						})
-						.then(function(stream) {
-							var video = document.querySelector('video');
-							// Older browsers may not have srcObject
-							if("srcObject" in video) {
-								video.srcObject = stream;
-							} else {
-								// Avoid using this in new browsers, as it is going away.
-								video.src = window.URL.createObjectURL(stream);
-							}
-							video.onloadedmetadata = function(e) {
-								video.play();
-							};
-						})
-						.catch(function(err) {
-							console.log(err.name + ": " + err.message);
-						})
-					//					navigator.getUserMedia({
-					//						"video": true
-					//					}, successcb, errocb);
-				} else if(navigator.webkitGetUserMedia) {
-
-					$("#testfield").append('webkitGetUserMedia is enable<br/>');
-
-					navigator.webkitGetUserMedia({
-						"video": true
-					}, function(stream) {
-						video.src = window.webkitURL.createObjectURL(stream);
-						video.play();
-					}, errocb);
-				}
+				navigator.mediaDevices.getUserMedia({
+						video: true
+					})
+					.then(function(stream) {
+						var video = document.querySelector('video');
+						// Older browsers may not have srcObject
+						if("srcObject" in video) {
+							
+					$("#testfield").append('srcObject setting');
+							video.srcObject = stream;
+						} else {
+							// Avoid using this in new browsers, as it is going away.
+							if('webkitURL' in window){
+									
+					$("#testfield").append('window.webkitURL setting');
+									video.src = window.webkitURL.createObjectURL(stream);
+								}else{
+								
+					$("#testfield").append('window.URL setting');
+									video.src = window.URL.createObjectURL(stream);	
+								}
+//							video.src = window.URL.createObjectURL(stream);
+						}
+						video.onloadedmetadata = function(e) {
+							video.play();
+						};
+					})
+					.catch(function(err) {
+						console.log(err.name + ": " + err.message);
+					});
+				//					navigator.getUserMedia({
+				//						"video": true
+				//					}, successcb, errocb);
+				//				} else if(navigator.webkitGetUserMedia) {
+				//
+				//					$("#testfield").append('webkitGetUserMedia is enable<br/>');
+				//
+				//					navigator.webkitGetUserMedia({
+				//						"video": true
+				//					}, function(stream) {
+				//						video.src = window.webkitURL.createObjectURL(stream);
+				//						video.play();
+				//					}, errocb);
+				//				}
 				document.getElementById("paizhao").addEventListener("click", function() {
 					context.drawImage(video, 0, 0, 640, 480);
 					$("#testfield").append('拍照成功<br/>');
