@@ -1,16 +1,16 @@
 // console.log("hello world!");
 
 var express = require("express");
-var mapHandlers = require("./lib/mapHandler.js");
+// var mapHandlers = require("./lib/mapHandler.js");
 // var configs = require("./configs/server.json");
 
 // console.log(process.env);
 
 var app = express();
 
-app.use(express.static("html"));
+app.use(express.static("wabapp"));
 
-app.get("/getmarks", mapHandlers.getAreaMarks);
+// app.get("/getmarks", mapHandlers.getAreaMarks);
 
 var server = app.listen(8088, function(){
 	console.log(`Server running at ${server.address().address}:${server.address().address}`);
