@@ -43,6 +43,9 @@
 			// Older browsers might not implement mediaDevices at all, so we set an empty object first
 			if(navigator.mediaDevices === undefined) {
 				navigator.mediaDevices = {};
+			} else {
+
+				$("#testfield").append('mediaDevices mode <br/>');
 			}
 
 			// Some browsers partially implement mediaDevices. We can't just assign an object
@@ -72,6 +75,9 @@
 						getUserMedia.call(navigator, constraints, resolve, reject);
 					});
 				}
+			} else {
+
+				$("#testfield").append('getUserMedia mode <br/>');
 			}
 
 			$(document).ready(function() {
@@ -92,24 +98,27 @@
 						video: true
 					})
 					.then(function(stream) {
-						var video = document.querySelector('video');
+//						var video = document.querySelector('video');
 						// Older browsers may not have srcObject
+						
+						$("#testfield").append('start video <br/>');
+						
 						if("srcObject" in video) {
-							
-					$("#testfield").append('srcObject setting');
+
+							$("#testfield").append('srcObject setting');
 							video.srcObject = stream;
 						} else {
 							// Avoid using this in new browsers, as it is going away.
-							if('webkitURL' in window){
-									
-					$("#testfield").append('window.webkitURL setting');
-									video.src = window.webkitURL.createObjectURL(stream);
-								}else{
-								
-					$("#testfield").append('window.URL setting');
-									video.src = window.URL.createObjectURL(stream);	
-								}
-//							video.src = window.URL.createObjectURL(stream);
+							if('webkitURL' in window) {
+
+								$("#testfield").append('window.webkitURL setting');
+								video.src = window.webkitURL.createObjectURL(stream);
+							} else {
+
+								$("#testfield").append('window.URL setting');
+								video.src = window.URL.createObjectURL(stream);
+							}
+							//							video.src = window.URL.createObjectURL(stream);
 						}
 						video.onloadedmetadata = function(e) {
 							video.play();
