@@ -5,13 +5,13 @@
 		<title>html5调用摄像头实现拍照</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
-		<!-- HTTP 1.1 -->  
-		<meta http-equiv="pragma" content="no-cache"/>  
-		<!-- HTTP 1.0 -->  
-		<meta http-equiv="cache-control" content="no-cache"/>  
-		<!-- Prevent caching at the proxy server -->  
-		<meta http-equiv="expires" content="0"/>  
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<!-- HTTP 1.1 -->
+		<meta http-equiv="pragma" content="no-cache" />
+		<!-- HTTP 1.0 -->
+		<meta http-equiv="cache-control" content="no-cache" />
+		<!-- Prevent caching at the proxy server -->
+		<meta http-equiv="expires" content="0" />
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 	</head>
 
@@ -43,11 +43,25 @@
 
 				var errocb = function(err) {
 					$("#testfield").append('error:' + JSON.stringify(err));
-						};
-				var successcb = function(stream){
+					$("#testfield").append('error.name:' + err.name);
+					$("#testfield").append('error.message:' + err.message);
+				};
+				var successcb = function(stream) {
 					$("#testfield").append('stream:' + stream);
 					$("#testfield").append('video:' + video);
 
+					if("srcObject" in video) {
+						video.srcObject = stream;
+					} else {
+						// Avoid using this in new browsers, as it is going away.
+						if('webkitURL' in window){
+							
+							video.src = window.webkitURL.createObjectURL(stream);
+						}else{
+						
+							video.src = window.URL.createObjectURL(stream);	
+						}
+					}
 					video.srcObject = stream;
 					video.play();
 				};
@@ -63,11 +77,30 @@
 
 					navigator.webkitGetUserMedia({
 						"video": true
-					}, function(stream) {
-						video.src = window.webkitURL.createObjectURL(stream);
-						video.play();
-					}, errocb);
-				}else{
+					}, successcb, errocb);
+				} else if(navigator.mediaDevices) {
+
+					$("#testfield").append('mediaDevices is enable<br/>');
+					navigator.mediaDevices.getUserMedia({
+							video: true
+						})
+						.then(function(stream) {
+							var video = document.querySelector('video');
+							// Older browsers may not have srcObject
+							if("srcObject" in video) {
+								video.srcObject = stream;
+							} else {
+								// Avoid using this in new browsers, as it is going away.
+								video.src = window.URL.createObjectURL(stream);
+							}
+							video.onloadedmetadata = function(e) {
+								video.play();
+							};
+						})
+						.catch(function(err) {
+							console.log(err.name + ": " + err.message);
+						})
+				} else {
 					$("#testfield").append('do not support cam');
 				}
 				document.getElementById("paizhao").addEventListener("click", function() {
