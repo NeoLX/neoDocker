@@ -5,12 +5,19 @@
 		<title>html5调用摄像头实现拍照</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
+		<!-- HTTP 1.1 -->  
+		<meta http-equiv="pragma" content="no-cache">  
+		<!-- HTTP 1.0 -->  
+		<meta http-equiv="cache-control" content="no-cache">  
+		<!-- Prevent caching at the proxy server -->  
+		<meta http-equiv="expires" content="0">  
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 	</head>
 
 	<body>
 		<div>
-			<video id="video" autoplay="" style='width:640px;height:480px'></video>
+			<video id="video" autoplay="false" style='width:640px;height:480px'></video>
 		</div>
 		<div>
 			<button id="paizhao">拍照</button>
@@ -42,18 +49,18 @@
 					$("#testfield").append('stream:' + stream);
 					$("#testfield").append('video:' + video);
 
-					video.src = stream;
+					video.srcObject = stream;
 					video.play();
 				};
 				if(navigator.getUserMedia) {
-					$("#testfield").append('getUserMedia is enable');
+					$("#testfield").append('getUserMedia is enable<br/>');
 
 					navigator.getUserMedia({
 						"video": true
 					}, successcb, errocb);
 				} else if(navigator.webkitGetUserMedia) {
 
-					$("#testfield").append('webkitGetUserMedia is enable');
+					$("#testfield").append('webkitGetUserMedia is enable<br/>');
 
 					navigator.webkitGetUserMedia({
 						"video": true
