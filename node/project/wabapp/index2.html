@@ -65,20 +65,8 @@
 					video.srcObject = stream;
 					video.play();
 				};
-				if(navigator.getUserMedia) {
-					$("#testfield").append('getUserMedia is enable<br/>');
-
-					navigator.getUserMedia({
-						"video": true
-					}, successcb, errocb);
-				} else if(navigator.webkitGetUserMedia) {
-
-					$("#testfield").append('webkitGetUserMedia is enable<br/>');
-
-					navigator.webkitGetUserMedia({
-						"video": true
-					}, successcb, errocb);
-				} else if(navigator.mediaDevices) {
+				
+				if(navigator.mediaDevices) {
 
 					$("#testfield").append('mediaDevices is enable<br/>');
 					navigator.mediaDevices.getUserMedia({
@@ -91,7 +79,14 @@
 								video.srcObject = stream;
 							} else {
 								// Avoid using this in new browsers, as it is going away.
-								video.src = window.URL.createObjectURL(stream);
+//								video.src = window.URL.createObjectURL(stream);
+								if('webkitURL' in window){
+									
+									video.src = window.webkitURL.createObjectURL(stream);
+								}else{
+								
+									video.src = window.URL.createObjectURL(stream);	
+								}
 							}
 							video.onloadedmetadata = function(e) {
 								video.play();
@@ -100,6 +95,19 @@
 						.catch(function(err) {
 							console.log(err.name + ": " + err.message);
 						})
+				}else if(navigator.getUserMedia) {
+					$("#testfield").append('getUserMedia is enable<br/>');
+
+					navigator.getUserMedia({
+						"video": true
+					}, successcb, errocb);
+				} else if(navigator.webkitGetUserMedia) {
+
+					$("#testfield").append('webkitGetUserMedia is enable<br/>');
+
+					navigator.webkitGetUserMedia({
+						"video": true
+					}, successcb, errocb);
 				} else {
 					$("#testfield").append('do not support cam');
 				}
