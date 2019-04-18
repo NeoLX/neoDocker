@@ -1,4 +1,4 @@
-FROM node:lts-jessie
+FROM node:lts-slim
 
 RUN apt-get update 
 RUN apt-get install -y apt-utils 
