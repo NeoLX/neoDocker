@@ -7,5 +7,5 @@ RUN apt-get install -y build-essential libcairo2-dev libpango1.0-dev libjpeg-dev
 
 RUN mkdir -p /app/lib \
     && cd /app/lib \
-    && npm install -s opencv4nodejs \
-    && npm install -s canvas
+    && npm install -s opencv4nodejs 
+RUN npm install -s --build-from-source canvas 
